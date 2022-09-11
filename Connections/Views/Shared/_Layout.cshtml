@@ -1,50 +1,104 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<AppUser> SignInManager
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Connections</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!--fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800&family=Roboto:ital,wght@0,100;0,400;0,900;1,100;1,300;1,500;1,900&display=swap"
+          rel="stylesheet">
+
+    <!--Boostrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <!--Boostrap Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Connections.styles.css" asp-append-version="true" />
+
+    <!--BoostWatch Cerulean Theme-->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css"/>
+
+    <!--Dev Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+    <!-- Font Awesome-->
+    <script src="https://kit.fontawesome.com/6bf18bfbb2.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top border-bottom border-light navShadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Connections</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/connections.svg" height="90" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        
+                        @if(SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Contacts" asp-action="Index">Connections</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                            </li>
+                        }
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <main class="content" id="mainHero">
+        <section class="container h-100">
             @RenderBody()
-        </main>
-    </div>
+        </section>
+    </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Connections - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer container-fluid">
+        <div class="row align-items-center py-2">
+            <div class="col">
+                <div class="row align-items-center gy-2">
+                    <div class="col d-flex justify-content-center justify-content-md-start order-last order-md-first copyright">
+                        &copy; 2022 Esteban Lopez
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <img src="~/img/connections.svg" height="100">
+                    </div>
+                    <div class="col-12 col-md d-flex justify-content-center justify-content-md-end">
+                        <a href="https://www.linkedin.com/in/elopez7/" class="socialicons" target="_blank"><i class="bi bi-linkedin p-2 "></i></a>
+                        <a href="https://twitter.com/qtguydoes" class="socialicons" target="_blank"><i class="bi bi-twitter p-2"></i></a>
+                        <a href="https://www.youtube.com/channel/UCO2xLaPIGbcJRlP38rLw9dg" class="socialicons" target="_blank"><i class="bi bi-youtube p-2"></i></a>
+                        <a href="https://github.com/elopez7" class="socialicons" target="_blank"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <!--Sweet Alerts-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
